@@ -1,0 +1,45 @@
+.bloco1 {
+    display: flex;
+    flex-direction: column; /* Coloca os elementos em coluna */
+    gap: 10px; /* Espaçamento entre os elementos */
+    width: 100%; /* Largura total do bloco */
+    max-width: 300px; /* Limita a largura interna do bloco */
+    margin: auto; /* Centraliza o bloco dentro do container */
+}
+
+.input-container {
+    display: flex;
+    align-items: center; /* Centraliza verticalmente os itens */
+    width: 100%; /* Largura total */
+    position: relative; /* Para posicionar o ícone */
+}
+
+.link-icon {
+    position: absolute; /* Posiciona o ícone */
+    left: 10px; /* Distância do lado esquerdo */
+    font-size: 20px; /* Tamanho do ícone */
+}
+
+input[type="text"] {
+    padding: 10px 40px; /* Espaçamento interno, reservando espaço para o ícone e botão */
+    border: 2px solid #ccc; /* Borda cinza */
+    border-radius: 8px; /* Bordas arredondadas */
+    width: 100%; /* Largura total do bloco */
+    box-sizing: border-box; /* Inclui o padding na largura total */
+}
+
+button {
+    padding: 7px; /* Espaçamento interno */
+    background-color: #55bc65; /* Cor de fundo azul */
+    color: white; /* Cor do texto */
+    border: none; /* Sem borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    cursor: pointer; /* Muda o cursor ao passar o mouse */
+    transition: background-color 0.3s; /* Efeito de transição */
+    position: absolute; /* Para posicionar o botão dentro do container */
+    right: 10px; /* Distância do lado direito */
+}
+
+button:hover {
+    background-color: #41a953; /* Tom mais escuro ao passar o mouse */
+}

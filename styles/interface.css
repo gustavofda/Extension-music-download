@@ -1,0 +1,26 @@
+#interface {
+    background-color: #fffff; /* Fundo branco para contraste */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    padding: 20px; /* Espaçamento interno */
+    width: 400px; /* Largura fixa */
+    height: 400px; /* Altura fixa */
+    text-align: center; /* Centralizar texto */
+    display: flex; /* Usar flexbox para centralizar o conteúdo */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    background-color: 
+}
+
+
+/* Estilo do título */
+h1 {
+    font-size: 24px; /* Tamanho da fonte */
+    margin-bottom: 10px; /* Espaçamento abaixo do título */
+}
+
+/* Estilo da descrição */
+.descricao {
+    font-size: 16px; /* Tamanho da fonte */
+    margin-bottom: 20px; /* Espaçamento abaixo da descrição */
+}
