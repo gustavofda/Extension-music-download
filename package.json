@@ -12,6 +12,8 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.0",
+    "youtube-dl-exec": "^3.0.9",
+    "ytdl": "^1.4.1",
     "ytdl-core": "^4.11.5"
   }
 }
