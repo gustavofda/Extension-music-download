@@ -1,5 +1,5 @@
 const express = require('express');
-const ytdl = require('ytdl-core');
+const youtubeDlExec = require('youtube-dl-exec');
 const cors = require('cors');
 const app = express();
 const PORT = 3000;
@@ -17,21 +17,46 @@ app.post('/download', async (req, res) => {
 
     try {
         console.log('Recebido link:', link);
-        const info = await ytdl.getInfo(link);
-        const audioFormat = ytdl.chooseFormat(info.formats, { quality: '140' });
-        
-        // Obtem o título do vídeo
-        const title = info.videoDetails.title;
+
+        // Obtem informações do vídeo
+        const info = await youtubeDlExec(link, {
+            dumpSingleJson: true,
+            noWarnings: true,
+            output: '%(title)s.%(ext)s' // Define o formato do arquivo
+        });
+
+        const title = info.title.replace(/[^\w\s]/gi, '').replace(/\s+/g, '_'); // Substitui espaços por underscores
         console.log('Baixando áudio:', title);
 
         res.header('Content-Disposition', `attachment; filename="${title}.mp3"`);
         res.header('Content-Type', 'audio/mpeg');
-        
-        // Streaming do arquivo de áudio para a resposta
-        ytdl(link, { format: audioFormat }).pipe(res);
+
+        // Chama o youtube-dl para baixar o arquivo
+        youtubeDlExec(link, {
+            extractAudio: true,
+            audioFormat: 'mp3',
+            noWarnings: true,
+            output: `downloads/${title}.%(ext)s`, // Define o caminho de saída
+        }).pipe(res);
+
+        // Tratamento de erros no streaming
+        .on('error', (err) => {
+            console.error('Erro no stream:', err);
+            if (err.code === 'ENOTFOUND') {
+                return res.status(404).json({ error: 'Link inválido ou não encontrado.' });
+            }
+            res.status(500).json({ error: 'Erro ao baixar a música. Tente novamente mais tarde.' });
+        });
+
     } catch (error) {
         console.error('Erro ao baixar:', error);
-        res.status(500).json({ error: 'Erro ao baixar a música' });
+        if (error.message.includes('403')) {
+            res.status(403).json({ error: 'Acesso negado. O vídeo pode ser restrito.' });
+        } else if (error.message.includes('404')) {
+            res.status(404).json({ error: 'Vídeo não encontrado. Verifique o link.' });
+        } else {
+            res.status(500).json({ error: 'Erro ao baixar a música. Tente novamente mais tarde.' });
+        }
     }
 });
 
